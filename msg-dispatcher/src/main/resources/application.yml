@@ -1,0 +1,41 @@
+server:
+  port: 18080
+
+handler:
+  ribbon:
+    listOfServers: localhost:18081
+ribbon:
+  eureka:
+    enabled: false
+
+spring:
+  cloud:
+    stream:
+      bindings:
+        msgChannel:
+          binder: rabbit
+          destination: msg.exchange
+          contentType: application/json
+          group: msg-group
+  rabbitmq:
+    host:                                 localhost
+    username:                             guest
+    password:                             guest
+    port:                                 5672
+    listener:
+      retry:
+        enabled: false
+---
+handler:
+  ribbon:
+    listOfServers: msg-handler:18081
+spring:
+  profiles: docker
+  rabbitmq:
+    host:                                 msg-rabbitmq
+    username:                             guest
+    password:                             guest
+    port:                                 5672
+    listener:
+      retry:
+        enabled: false

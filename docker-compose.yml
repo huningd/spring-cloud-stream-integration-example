@@ -1,0 +1,58 @@
+version: '2'
+
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+# ---------------
+# rabbitmq
+# ---------------
+  msg-rabbitmq:
+    hostname: msg-rabbitmq
+    labels:
+      name: "rabbitmq"
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+#    environment:
+#      - RABBITMQ_DEFAULT_PASS=guest
+#      - RABBITMQ_DEFAULT_USER=guest
+    networks:
+      - app-tier
+# ---------------
+# msg-dispatcher
+# ---------------
+  msg-dispatcher:
+    labels:
+      name: "msg-dispatcher"
+    image: dhuning/msg-dispatcher
+    environment:
+      - spring.profiles.active=docker
+    ports:
+      - "18080:18080"
+    depends_on:
+      - msg-rabbitmq
+    links:
+      - msg-handler
+      - msg-rabbitmq
+    networks:
+      - app-tier
+# ---------------
+# msg-handler
+# ---------------
+  msg-handler:
+    labels:
+      name: "msg-handler"
+    image: dhuning/msg-handler
+    environment:
+      - spring.profiles.active=docker
+    ports:
+      - "18081:18081"
+    depends_on:
+      - msg-rabbitmq
+    links:
+      - msg-rabbitmq
+    networks:
+      - app-tier

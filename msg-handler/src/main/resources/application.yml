@@ -1,0 +1,36 @@
+server:
+  port: 18081
+spring:
+  cloud:
+    stream:
+      bindings:
+        msgChannel:
+          binder: rabbit
+          destination: msg.exchange
+          # durable subscription happens only if consumer group is set.
+          # see http://docs.spring.io/spring-cloud-stream/docs/1.0.0.RC1/reference/htmlsingle/index.html#durability
+          group: msg-group
+          consumer:
+            max-attempts: 5
+      rabbit:
+        bindings:
+          msgChannel:
+            consumer:
+              acknowledgeMode: manual
+  rabbitmq:
+    host:                                 localhost
+    username:                             guest
+    password:                             guest
+    port:                                 5672
+
+---
+spring:
+  profiles: docker
+  rabbitmq:
+    host:                                 msg-rabbitmq
+    username:                             guest
+    password:                             guest
+    port:                                 5672
+    listener:
+      retry:
+        enabled: false
