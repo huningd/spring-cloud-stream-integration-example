@@ -12,4 +12,4 @@ curl -d {} http://localhost:18080/generateMsg\?text\=test&direct=true
 
 
 # Execute
-To exceute this example excute run.sh.
+Execute run.sh to build this example and start the services. The run script will use the docker-compose to start some containers.
