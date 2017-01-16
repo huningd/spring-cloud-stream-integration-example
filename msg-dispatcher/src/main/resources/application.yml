@@ -8,15 +8,29 @@ ribbon:
   eureka:
     enabled: false
 
+# Use this flag to switch from async (false) to sync (true) message exchange.
+msg.direct: false
+
 spring:
+  profiles:
+    active: default
   cloud:
     stream:
       bindings:
         msgChannel:
-          binder: rabbit
           destination: msg.exchange
           contentType: application/json
           group: msg-group
+---
+spring:
+  profiles: default
+  cloud:
+    stream:
+      bindings:
+        msgChannel:
+          # if you only use one binder you don't have to set the binder.
+          # http://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle/#multiple-binders
+          binder: rabbit
   rabbitmq:
     host:                                 localhost
     username:                             guest
@@ -30,7 +44,12 @@ handler:
   ribbon:
     listOfServers: msg-handler:18081
 spring:
-  profiles: docker
+  profiles: docker-rabbitmq
+  cloud:
+    stream:
+      bindings:
+        msgChannel:
+          binder: rabbit
   rabbitmq:
     host:                                 msg-rabbitmq
     username:                             guest
@@ -39,3 +58,18 @@ spring:
     listener:
       retry:
         enabled: false
+---
+handler:
+  ribbon:
+    listOfServers: msg-handler:18081
+spring:
+  profiles: docker-kafka
+  cloud:
+    stream:
+      kafka:
+        binder:
+          zkNodes: msg-kafka
+          brokers: msg-kafka
+      bindings:
+        msgChannel:
+          binder: kafka

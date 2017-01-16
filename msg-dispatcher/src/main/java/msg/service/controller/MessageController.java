@@ -2,7 +2,6 @@ package msg.service.controller;
 
 import msg.processor.domain.Message;
 import msg.service.integration.MessageGateway;
-import org.apache.commons.lang.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +18,9 @@ public class MessageController {
 
     @RequestMapping("/generateMsg")
     @ResponseBody
-    public Message generateWork(@RequestParam("text") String text, @RequestParam(value = "direct", required = false) Boolean direct ) {
+    public Message generateWork(@RequestParam("text") String text) {
         Message sampleMessage = new Message(UUID.randomUUID().toString(), text);
-        if(BooleanUtils.isTrue(direct)){
-            messageGateway.generateDirect(sampleMessage);
-        }else {
-            messageGateway.generate(sampleMessage);
-        }
+        messageGateway.generate(sampleMessage);
         return sampleMessage;
     }
 }

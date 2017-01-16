@@ -3,12 +3,13 @@ package msg.service.integration;
 import msg.processor.domain.Message;
 import org.springframework.integration.annotation.Gateway;
 import org.springframework.integration.annotation.MessagingGateway;
+import org.springframework.messaging.handler.annotation.Header;
 
 @MessagingGateway
 public interface MessageGateway {
-	@Gateway(requestChannel = MessageSource.CHANNEL_NAME)
+	@Gateway(requestChannel = "handler.input")
 	void generate(Message message);
 
-	@Gateway(requestChannel = "handler.input")
-	void generateDirect(Message message);
+	@Gateway(requestChannel = "route.input")
+	void generateRoute(Message message, @Header("direct") boolean direct);
 }
