@@ -16,6 +16,7 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+# Use this properties specifiy user and pass.
 #    environment:
 #      - RABBITMQ_DEFAULT_PASS=guest
 #      - RABBITMQ_DEFAULT_USER=guest
@@ -29,7 +30,7 @@ services:
       name: "msg-dispatcher"
     image: dhuning/msg-dispatcher
     environment:
-      - spring.profiles.active=docker
+      - spring.profiles.active=docker-rabbitmq
     ports:
       - "18080:18080"
     depends_on:
@@ -47,7 +48,7 @@ services:
       name: "msg-handler"
     image: dhuning/msg-handler
     environment:
-      - spring.profiles.active=docker
+      - spring.profiles.active=docker-rabbitmq
     ports:
       - "18081:18081"
     depends_on:

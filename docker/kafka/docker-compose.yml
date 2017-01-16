@@ -1,0 +1,58 @@
+version: '2'
+
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+# ---------------
+# kafka
+# ---------------
+  msg-kafka:
+    hostname: msg-kafka
+    labels:
+      name: "kafka"
+    image: spotify/kafka
+    environment:
+      - ADVERTISED_HOST=msg-kafka
+      - ADVERTISED_PORT=9092
+    ports:
+      - "2181:2181"
+      - "9092:9092"
+    networks:
+      - app-tier
+# ---------------
+# msg-dispatcher
+# ---------------
+  msg-dispatcher:
+    labels:
+      name: "msg-dispatcher"
+    image: dhuning/msg-dispatcher
+    environment:
+      - spring.profiles.active=docker-kafka
+    ports:
+      - "18080:18080"
+    depends_on:
+      - msg-kafka
+    links:
+      - msg-handler
+      - msg-kafka
+    networks:
+      - app-tier
+# ---------------
+# msg-handler
+# ---------------
+  msg-handler:
+    labels:
+      name: "msg-handler"
+    image: dhuning/msg-handler
+    environment:
+      - spring.profiles.active=docker-kafka
+    ports:
+      - "18081:18081"
+    depends_on:
+      - msg-kafka
+    links:
+      - msg-kafka
+    networks:
+      - app-tier
