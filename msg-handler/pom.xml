@@ -4,12 +4,11 @@
 
     <parent>
         <groupId>de.dhuning.samples</groupId>
-        <artifactId>spring-cloud-stream-rabbit</artifactId>
+        <artifactId>spring-cloud-stream-integration-example</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>msg-handler</artifactId>
-
 
     <dependencies>
         <dependency>
@@ -22,6 +21,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>

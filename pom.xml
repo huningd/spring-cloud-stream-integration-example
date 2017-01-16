@@ -16,8 +16,8 @@
 
     <modules>
         <module>msg-handler</module>
-        <module>msg-dispatcher</module>
         <module>msg-handler-api</module>
+        <module>msg-dispatcher</module>
     </modules>
 
     <properties>
@@ -31,11 +31,16 @@
             <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-kafka</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
