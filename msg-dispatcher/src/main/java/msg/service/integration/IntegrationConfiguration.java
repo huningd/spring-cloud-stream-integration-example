@@ -9,12 +9,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.dsl.IntegrationFlow;
 
 /**
- * This configuration defines three integration flows. The route integration flow deciedes on the header direct if the message should be send via FeignClient or via a message queue.
+ * This configuration defines integration flows and all other components regarding to the integration logic.
  */
 @Configuration
 @EnableBinding(MessageSource.class)
 public class IntegrationConfiguration {
 
+    /**
+     * This flow uses the feign client {@link MessageHandlerClient} to send message to the msg-handler service. You can active this flow through defining the property msg.direct and assign the value true.
+     */
     @Bean("handler")
     @ConditionalOnProperty(value = "msg.direct", havingValue = "true", matchIfMissing = true)
     IntegrationFlow handlerSync(MessageHandlerClient client) {
@@ -28,6 +31,9 @@ public class IntegrationConfiguration {
                 );
     }
 
+    /**
+     * This flow routes an message to the message channel msgChannel. It will be active if the property msg.direct is false.
+     */
     @Bean("handler")
     @ConditionalOnProperty(value = "msg.direct", havingValue = "false")
     IntegrationFlow handlerAsync(MessageHandlerClient client) {
@@ -36,6 +42,9 @@ public class IntegrationConfiguration {
     }
 
 
+    /**
+     * This integration flow is an example of how to route an message depending on a header. If the value of header direct ist true the message will be send via FeignClient otherwise via a message queue.
+     */
     @Bean
     IntegrationFlow route(MessageHandlerClient client) {
         return f -> f

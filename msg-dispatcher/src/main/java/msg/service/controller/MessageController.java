@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.UUID;
 
+/**
+ * REST interface to generate messages.
+ */
 @Controller
 public class MessageController {
 

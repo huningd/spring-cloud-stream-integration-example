@@ -5,6 +5,9 @@ import org.springframework.integration.annotation.Gateway;
 import org.springframework.integration.annotation.MessagingGateway;
 import org.springframework.messaging.handler.annotation.Header;
 
+/**
+ * Gateway to easily interact with integration flows.
+ */
 @MessagingGateway
 public interface MessageGateway {
 	@Gateway(requestChannel = "handler.input")
