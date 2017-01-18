@@ -32,9 +32,9 @@ Execute run.sh to build this example and start the services. The run script will
 1. java -jar target/msg-handler-0.0.1-SNAPSHOT.jar
 
 # Further information:
-Spring Integration Java DSL Tuturial: https://spring.io/blog/2014/11/25/spring-integration-java-dsl-line-by-line-tutorial
-Spring Integration Java DSL https://github.com/spring-projects/spring-integration-java-dsl/wiki/spring-integration-java-dsl-reference#spring-integration-java-dsl
-Testing Spring Cloud Stream http://docs.spring.io/spring-cloud-stream/docs/Brooklyn.RELEASE/reference/html/_testing.html
+- Spring Integration Java DSL Tuturial: https://spring.io/blog/2014/11/25/spring-integration-java-dsl-line-by-line-tutorial
+- Spring Integration Java DSL https://github.com/spring-projects/spring-integration-java-dsl/wiki/spring-integration-java-dsl-reference#spring-integration-java-dsl
+- Testing Spring Cloud Stream http://docs.spring.io/spring-cloud-stream/docs/Brooklyn.RELEASE/reference/html/_testing.html
 # Open Issues
 - It seems that there is no binder for aws sns or sqs in spring cloud stream. https://github.com/spring-cloud/spring-cloud-stream/issues/135
 - Create an Dockerfile to test sqs local. This should be possible with elasticmq

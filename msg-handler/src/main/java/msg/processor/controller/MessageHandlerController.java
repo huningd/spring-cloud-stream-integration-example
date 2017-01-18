@@ -1,4 +1,4 @@
-package msg.processor.contoller;
+package msg.processor.controller;
 
 import msg.processor.domain.Message;
 import msg.processor.domain.MessageHandler;
